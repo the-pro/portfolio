@@ -1,78 +1,32 @@
 import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import Link from 'next/link'
+import Layout, { siteTitle } from '../../components/layout'
+import utilStyles from '../../styles/utils.module.css'
 
 export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Ayas Behera</title>
+        <title>Event Loop: How Javascript Works</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
-        <Layout home>
+      <Layout>
+      <h1 className={utilStyles.heading2Xl}><span className={utilStyles.font}>{'Event Loop: How Javascript Works'}</span></h1>
+      <p className={utilStyles.lightText} >June 01, 2021</p>
         <section className={utilStyles.headingMd}>
-        <p className={utilStyles.font}>Hi, I am Ayas.
-          I like solving problems (not just programming). 
-          I also like to develop web applications and contribute to open source projects. I use javascript to do that.
-          I have previously contributed to <a href='https://github.com/juice-shop'> @juice-shop</a> and <a href='https://github.com/internetarchive'>@internetarchive</a>.
-          Currently I am working on the juice-shop project as my project for the <strong>GSoC 2021</strong> with <a href='https://github.com/OWASP'>OWASP Foundation</a>.  </p>
-          I use this to document my work and write about some stuff about whatever I know with my limited knowledge in JavaScript. 
+        <p className={utilStyles.font}>
+        The event loop is what allows Node.js to perform <strong>non-blocking I/O operations</strong> — despite the fact that JavaScript is single-threaded — by offloading operations to the system kernel whenever possible.
+        Since most modern kernels are multi-threaded, they can handle multiple operations executing in the background. When one of these operations completes, the kernel tells Node.js so that the appropriate callback may be added to the poll queue to eventually be executed. We'll explain this in further detail later in this topic.
+        </p >
+        <h3 className={utilStyles.font}>Event Loop Explained</h3>
+        <p className={utilStyles.font}>
+        When Node.js starts, it initializes the event loop, processes the provided input script (or drops into the REPL, which is not covered in this document) which may make async API calls, schedule timers, or call <strong>process.nextTick()</strong>, then begins processing the event loop.
+        Each phase has a FIFO queue of callbacks to execute. While each phase is special in its own way, generally, when the event loop enters a given phase, it will perform any operations specific to that phase, then execute callbacks in that phase's queue until the queue has been exhausted or the maximum number of callbacks has executed. When the queue has been exhausted or the callback limit is reached, the event loop will move to the next phase, and so on.
 
-          If you want to connect with me, you can follow me on <a href='https://twitter.com/ayasbehera'>twitter</a> or send a connection request on <a href='https://linkedin.com/ayas-behera'>Linked[in]</a>.
-
-          
-        <p className={utilStyles.font}>PS: I am also a 4 star programmer at codechef</p>
+        Since any of these operations may schedule more operations and new events processed in the poll phase are queued by the kernel, poll events can be queued while polling events are being processed. As a result, long running callbacks can allow the poll phase to run much longer than a timer's threshold.
+        </p>
       </section>
-      <section className={utilStyles.headingMd}>
-          <h2 className={utilStyles.font}>My Blogs</h2>
-          <a href="/posts/blog-javascript-event-loop" className={utilStyles.font}>
-            Event Loop: How Javascript Works
-          </a>
-          <p className={utilStyles.lightText}>01 June, 2021</p>
-          <a href="/posts/blog-gsoc" className={utilStyles.font}>
-            GSoC: How does the whole thing work! 
-          </a>
-          [Yet to be published]
-          <p className={utilStyles.lightText}>Wait for it</p>
-          <a href="https://www.geeksforgeeks.org/why-we-use-then-method-in-javascript/" className={utilStyles.font}>
-            Why do we use the then() method in javascript
-          </a>
-          <p className={utilStyles.lightText}>30 June, 2020</p>
-          
-        </section>
       </Layout>
-        {/* <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div> */}
       </main>
 
       <footer>
@@ -126,7 +80,7 @@ export default function Home() {
 
         a {
           color: inherit;
-          // text-decoration: none;
+          text-decoration: none;
         }
 
         .title a {
@@ -158,9 +112,9 @@ export default function Home() {
 
         code {
           background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
+        //   border-radius: 5px;
+        //   padding: 0.75rem;
+        //   font-size: 1.1rem;
           font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
             DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
